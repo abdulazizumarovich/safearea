@@ -14,7 +14,7 @@ is deprecated and disabled, and your app can't opt-out of going edge-to-edge.
 ## Overview
 
 SafeArea provides a simple API for handling system insets when implementing edge-to-edge
-either pragrammatically using `SafeArea.apply(view)` or wrapping a view by `SafeAreFrame`
+either programmatically using `SafeArea.apply(view)` or wrapping a view by `SafeAreaFrame`
 which extends `FrameLayout`. It ensures initial&nbsp;(user&nbsp;defined) insets&nbsp;(margin&nbsp;or&nbsp;padding)
 of a view is preserved and extended when they are behind of a system bars & display cutouts & keyboards,
 so the view remains visible.
