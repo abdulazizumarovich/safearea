@@ -102,6 +102,8 @@ and automatically applies the SafeArea logic during view construction.
 ## Todo
 
 - Ability to change `WindowInsetsCompat.Type` to provide developers flexible API.
+- Unit & Integration tests
+- More samples and demonstration media
 
 
 ## Contributing
