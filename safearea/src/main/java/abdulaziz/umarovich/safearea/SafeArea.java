@@ -51,10 +51,31 @@ public class SafeArea {
          * @param edges A bitmask of edges to apply insets to.
          * @param type  The type of inset to modify (padding or margin).
          */
-        public InsetSettings(@NonNull View view, int edges, InsetType type) {
+        private InsetSettings(@NonNull View view, int edges, InsetType type) {
             this.edges = edges;
             this.type = type;
             this.baseInset = initBaseInset(view, type);
+        }
+
+        /**
+         * Retrieves or creates InsetSettings for a given view.
+         * If the settings already exist with the same type, it returns the existing one.
+         * Otherwise, it creates a new one and associates it with the view.
+         *
+         * @param view  The view to which the insets will be applied.
+         * @param edges A bitmask of edges to apply insets to.
+         * @param type  The type of inset to modify (padding or margin).
+         * @return The InsetSettings for the view.
+         */
+        public static InsetSettings getOrCreateSettings(@NonNull View view, int edges, InsetType type) {
+            Object tag = view.getTag(R.id.view_inset_settings);
+            if (tag instanceof InsetSettings && ((InsetSettings) tag).type == type) {
+                return (InsetSettings) tag;
+            }
+
+            InsetSettings settings = new InsetSettings(view, edges, type);
+            view.setTag(R.id.view_inset_settings, settings);
+            return settings;
         }
 
         /**
@@ -200,7 +221,7 @@ public class SafeArea {
      * @see #apply(View, InsetType)
      */
     public static void apply(@NonNull View view, int edge, @NonNull InsetType insetType) {
-        InsetSettings settings = new InsetSettings(view, edge, insetType);
+        InsetSettings settings = InsetSettings.getOrCreateSettings(view, edge, insetType);
         ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
             Insets inset = insets.getInsets(WindowInsetsCompat.Type.systemBars()
                     | WindowInsetsCompat.Type.displayCutout()
