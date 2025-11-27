@@ -36,7 +36,7 @@ mavenPublishing {
         true
     }
 
-    coordinates("io.github.abdulazizumarovich", "safearea", "0.0.4")
+    coordinates("io.github.abdulazizumarovich", "safearea", "0.0.5")
 
     pom {
         name = "SafeArea"

@@ -205,7 +205,7 @@ public class SafeArea {
             Insets inset = insets.getInsets(WindowInsetsCompat.Type.systemBars()
                     | WindowInsetsCompat.Type.displayCutout()
                     | WindowInsetsCompat.Type.ime());
-            settings.updateInsets(view, inset);
+            settings.updateInsets(v, inset);
             return WindowInsetsCompat.CONSUMED;
         });
         requestApplyInsetsWhenAttached(view);
@@ -226,9 +226,12 @@ public class SafeArea {
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(viewGroup, (v, insets) -> {
+            if (!(v instanceof ViewGroup)) return WindowInsetsCompat.CONSUMED;
+
             boolean consumed = false;
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                WindowInsetsCompat childResult = ViewCompat.dispatchApplyWindowInsets(viewGroup.getChildAt(i), insets);
+            ViewGroup vg = (ViewGroup) v;
+            for (int i = 0; i < vg.getChildCount(); i++) {
+                WindowInsetsCompat childResult = ViewCompat.dispatchApplyWindowInsets(vg.getChildAt(i), insets);
                 if (childResult.isConsumed()) {
                     consumed = true;
                 }
